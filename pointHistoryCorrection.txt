@@ -1,0 +1,16 @@
+// Function to change multiplication factor on the historical data of a point record for a given period
+// Function call example: pointHistoryCorrection(read(energy),lastMonth(),1,20)
+(rec,dates,oldRatio,newRatio) => do
+
+    historyGrid : rec.hisRead(dates,{limit:null}).hisClip.findAll(x=>x.has("v0")).findAll(x=>x->v0!=null)
+    
+    //Correct the historical data
+    correctedHistoryGrid : historyGrid.map m=>m.set("v0",m->v0*(newRatio/oldRatio))
+    
+    //Write the corrected historical data to the point record 
+    correctedHistoryGrid.hisWrite(rec)
+  
+  
+  end
+  
+end
